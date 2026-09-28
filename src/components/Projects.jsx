@@ -1,12 +1,13 @@
 import {
-  CheckSquare, QrCode, Package, ListTodo, Database, Lock, Bot, ExternalLink
+  CheckSquare, QrCode, Package, ListTodo, Database, Lock, Bot, ExternalLink,
+  ScanSearch, ServerCog, Atom
 } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
 import { projects } from '../data/portfolio';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 // Map icon string names from data to Lucide components
-const ICONS = { CheckSquare, QrCode, Package, ListTodo, Database, Lock, Bot };
+const ICONS = { CheckSquare, QrCode, Package, ListTodo, Database, Lock, Bot, ScanSearch, ServerCog, Atom };
 
 const featured = projects.filter(p => p.featured);
 const other = projects.filter(p => !p.featured);
