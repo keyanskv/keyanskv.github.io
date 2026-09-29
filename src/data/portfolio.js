@@ -271,7 +271,7 @@ export const security = {
   ],
   tryhackme: {
     label: 'TryHackMe Badges',
-    url: 'https://tryhackme.com/badges',
+    url: 'https://tryhackme.com/p/Mr.keyan?tab=badges',
   },
 };
 
@@ -316,35 +316,35 @@ export const certifications = [
     issuer: 'Cisco',
     year: '2023',
     icon: 'Network',
-    verifyUrl: null,
+    verifyUrl: "https://www.credly.com/earner/earned/badge/1a0cf6f9-8896-44f3-bd39-a19c6da96247",
   },
   {
     name: 'Operating Systems Basics',
     issuer: 'IBM',
     year: '2023',
     icon: 'Monitor',
-    verifyUrl: null,
+    verifyUrl: "https://www.credly.com/earner/earned/badge/3059b185-0ff6-4b70-ab0c-220c9c6eb294",
   },
   {
     name: 'Introduction to Cybersecurity',
     issuer: 'Cisco',
     year: '2023',
     icon: 'Shield',
-    verifyUrl: null,
+    verifyUrl: "https://www.credly.com/earner/earned/badge/933023e4-cac2-485b-bc96-6e4fbbaaec74",
   },
   {
     name: 'Basics of Quantum Information',
     issuer: 'IBM',
     year: '2024',
     icon: 'Atom',
-    verifyUrl: null,
+    verifyUrl: "https://www.credly.com/earner/earned/badge/e4b002d2-890a-4b50-87cb-d79e637e2497",
   },
   {
     name: 'Journey to Cloud: Envisioning Your Solution',
     issuer: 'IBM SkillsBuild',
     year: '2024',
     icon: 'Cloud',
-    verifyUrl: null,
+    verifyUrl: "https://www.credly.com/earner/earned/badge/80553622-a3ed-48d1-86d3-058c5ff29046",
   },
 ];
 

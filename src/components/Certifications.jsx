@@ -18,26 +18,32 @@ export default function Certifications() {
         </p>
 
         <div className="cert__grid">
-          {certifications.map((cert, i) => {
-            const Icon = ICONS[cert.icon] ?? Shield;
-            return (
-              <article
-                key={cert.name}
-                className="cert-card reveal"
-                style={{ transitionDelay: `${i * 60}ms` }}
-              >
-                <div className="cert-card__icon" aria-hidden="true">
-                  <Icon size={18} />
-                </div>
-                <div>
-                  <h3 className="cert-card__name">{cert.name}</h3>
-                  <p className="cert-card__issuer">{cert.issuer}</p>
-                  <p className="cert-card__year">{cert.year}</p>
-                </div>
-              </article>
-            );
-          })}
+  {certifications.map((cert, i) => {
+    const Icon = ICONS[cert.icon] ?? Shield;
+
+    return (
+      <a
+        key={cert.name}
+        href={cert.verifyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="cert-card reveal"
+        style={{ transitionDelay: `${i * 60}ms` }}
+        aria-label={`Verify ${cert.name}`}
+      >
+        <div className="cert-card__icon" aria-hidden="true">
+          <Icon size={18} />
         </div>
+
+        <div>
+          <h3 className="cert-card__name">{cert.name}</h3>
+          <p className="cert-card__issuer">{cert.issuer}</p>
+          <p className="cert-card__year">{cert.year}</p>
+        </div>
+      </a>
+    );
+  })}
+</div>
       </div>
     </section>
   );
