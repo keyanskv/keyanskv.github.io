@@ -205,6 +205,30 @@ ul { list-style: none; }
   font-size: 0.8125rem;
 }
 
+.btn-resume {
+  background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(124,58,237,0.15));
+  color: var(--text-primary);
+  border: 1px solid rgba(59,130,246,0.35);
+  position: relative;
+  overflow: hidden;
+}
+.btn-resume::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59,130,246,0.22), rgba(124,58,237,0.22));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+.btn-resume:hover::before { opacity: 1; }
+.btn-resume:hover {
+  border-color: rgba(59,130,246,0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(59,130,246,0.25);
+}
+.btn-resume svg { position: relative; z-index: 1; }
+.btn-resume span, .btn-resume { position: relative; z-index: 1; }
+
 /* ── Cards ───────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);
@@ -315,8 +339,9 @@ ul { list-style: none; }
   font-family: var(--font-mono);
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--accent-blue);
   letter-spacing: -0.02em;
+  
 }
 .nav-logo span { color: var(--accent-blue); }
 
@@ -569,10 +594,103 @@ ul { list-style: none; }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* ── Profile Card ──────────────────────────────────────────── */
+.hero__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  flex-shrink: 0;
+}
+
+.profile-card__ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent-blue),
+    var(--accent-purple),
+    var(--accent-cyan),
+    var(--accent-blue)
+  );
+  animation: spin-ring 6s linear infinite;
+  opacity: 0.75;
+  filter: blur(1px);
+}
+
+@keyframes spin-ring {
+  to { transform: rotate(360deg); }
+}
+
+.profile-card__inner {
+  position: relative;
+  z-index: 1;
+  width: 208px;
+  height: 208px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--bg-primary);
+  box-shadow: 0 0 40px rgba(59,130,246,0.18), var(--shadow-card);
+}
+
+.profile-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.5s ease;
+}
+.profile-card:hover .profile-card__img {
+  transform: scale(1.05);
+}
+
+.profile-card__badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(10, 12, 16, 0.9);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  backdrop-filter: blur(10px);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-green);
+  letter-spacing: 0.04em;
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
 @media (max-width: 768px) {
   .hero__content {
     grid-template-columns: 1fr;
     padding: 2.5rem 0;
+  }
+  .hero__right {
+    align-items: center;
+  }
+  .profile-card {
+    width: 160px;
+    height: 160px;
+  }
+  .profile-card__inner {
+    width: 150px;
+    height: 150px;
   }
   .terminal { display: none; }
 }
@@ -1079,11 +1197,69 @@ ul { list-style: none; }
 /* ============================================================
    CERTIFICATIONS
    ============================================================ */
+
+/* ── Credly featured badge row ─────────────────────────────── */
+.credly-featured {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.credly-featured__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem 1rem;
+  transition: all var(--transition-base);
+  min-width: 180px;
+}
+.credly-featured__item:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.credly-badge-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+
+/* Credly injects an iframe — make sure it's centred & clipped nicely */
+.credly-badge-wrapper iframe {
+  border: none !important;
+  border-radius: var(--radius-md);
+}
+
+.credly-featured__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-top: 0.25rem;
+}
+
+.credly-featured__issuer {
+  font-size: 0.78rem;
+  color: var(--accent-blue);
+  font-family: var(--font-mono);
+  text-align: center;
+}
+
+/* ── Regular cert grid ─────────────────────────────────────── */
 .cert__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
-  margin-top: 2.5rem;
+  margin-top: 0;
 }
 
 .cert-card {

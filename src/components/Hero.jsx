@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
 import { personal } from '../data/portfolio';
 
@@ -35,6 +35,27 @@ function Terminal() {
         <span className="terminal__out terminal__out--dim">learning...</span>
         <span className="terminal__out terminal__out--dim">building...</span>
         <span className="terminal__out terminal__out--dim">contributing...<span className="terminal__cursor" /></span>
+      </div>
+    </div>
+  );
+}
+
+// Profile photo card with glowing ring effect
+function ProfileCard() {
+  return (
+    <div className="profile-card" aria-label="Profile photo">
+      <div className="profile-card__ring" aria-hidden="true" />
+      <div className="profile-card__inner">
+        <img
+          src={personal.profilePhoto}
+          alt="Keyan — profile photo"
+          className="profile-card__img"
+          loading="eager"
+        />
+      </div>
+      <div className="profile-card__badge" aria-hidden="true">
+        <span className="status-dot" />
+        <span>Available</span>
       </div>
     </div>
   );
@@ -83,6 +104,16 @@ export default function Hero() {
                 <GithubIcon size={16} />
                 GitHub Profile
               </a>
+              <a
+                id="hero-download-resume"
+                className="btn btn-resume"
+                href={personal.resumeUrl}
+                download="Keyan_Resume.pdf"
+                aria-label="Download Résumé as PDF"
+              >
+                <Download size={16} />
+                Download Résumé
+              </a>
             </div>
 
             {/* Social links */}
@@ -111,8 +142,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right — terminal widget */}
-          <Terminal />
+          {/* Right — profile photo + terminal stacked */}
+          <div className="hero__right">
+            <ProfileCard />
+            <Terminal />
+          </div>
         </div>
       </div>
     </section>

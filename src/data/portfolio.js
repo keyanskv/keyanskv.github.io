@@ -13,6 +13,8 @@ export const personal = {
   heroDescription:
     'I build practical software, automate Linux environments, explore cybersecurity through responsible vulnerability research, and experiment with AI and emerging technologies.',
   statusBadge: 'Currently learning • Building • Contributing to Open Source',
+  profilePhoto: '/profile.jpg',
+  resumeUrl: '/keyanskv.pdf', // drop your resume PDF into public/resume.pdf
 };
 
 export const about = {
@@ -92,6 +94,19 @@ export const experience = [
     ],
     tech: ['React', 'JavaScript', 'CSS', 'REST APIs'],
   },
+  {
+    role: 'Network Engineer',
+    period: 'Aug 2025 – May 2026',
+    duration: '~10 months',
+    highlights: [
+      'Managed network infrastructure including routers and switches.',
+      'Troubleshot network issues and improved connectivity stability.',
+      'Configured IP addressing and network setups.',
+      'Assisted in securing internal network systems.',
+    ],
+    tech: ["Switches", "Firewall", "Advanced troubleshooting", "Router", "Os-Installation", "CCTV", "Printer Sharing, File Sharing"],
+  },
+
 ];
 
 export const projects = [
@@ -297,6 +312,16 @@ export const openSource = {
       status: 'Under Review',
       statusColor: 'pending',
     },
+    {
+      project: 'Django Oscar',
+      description:
+        'Open-source contribution to the Django Oscar ',
+      pr: 'Pull Request #4643',
+      url: 'https://github.com/django-oscar/django-oscar/pull/4643',
+      status: 'Under Review',
+      statusColor: 'pending',
+    },
+
   ],
 };
 
@@ -316,35 +341,51 @@ export const certifications = [
     issuer: 'Cisco',
     year: '2023',
     icon: 'Network',
-    verifyUrl: "https://www.credly.com/earner/earned/badge/1a0cf6f9-8896-44f3-bd39-a19c6da96247",
+    verifyUrl: 'https://www.credly.com/badges/1a0cf6f9-8896-44f3-bd39-a19c6da96247/public_url',
+    credlyBadgeId: '1a0cf6f9-8896-44f3-bd39-a19c6da96247',
   },
+  //  <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="1a0cf6f9-8896-44f3-bd39-a19c6da96247" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+
+
   {
     name: 'Operating Systems Basics',
     issuer: 'IBM',
     year: '2023',
     icon: 'Monitor',
-    verifyUrl: "https://www.credly.com/earner/earned/badge/3059b185-0ff6-4b70-ab0c-220c9c6eb294",
+    verifyUrl: "https://www.credly.com/badges/3059b185-0ff6-4b70-ab0c-220c9c6eb294/public_url",
+    credlyBadgeId: '3059b185-0ff6-4b70-ab0c-220c9c6eb294',
   },
   {
     name: 'Introduction to Cybersecurity',
     issuer: 'Cisco',
     year: '2023',
     icon: 'Shield',
-    verifyUrl: "https://www.credly.com/earner/earned/badge/933023e4-cac2-485b-bc96-6e4fbbaaec74",
+    verifyUrl: "https://www.credly.com/badges/933023e4-cac2-485b-bc96-6e4fbbaaec74/public_url",
+    credlyBadgeId: '933023e4-cac2-485b-bc96-6e4fbbaaec74',
   },
   {
     name: 'Basics of Quantum Information',
     issuer: 'IBM',
     year: '2024',
     icon: 'Atom',
-    verifyUrl: "https://www.credly.com/earner/earned/badge/e4b002d2-890a-4b50-87cb-d79e637e2497",
+    verifyUrl: "https://www.credly.com/badges/e4b002d2-890a-4b50-87cb-d79e637e2497/public_url",
+    credlyBadgeId: 'e4b002d2-890a-4b50-87cb-d79e637e2497',
   },
   {
     name: 'Journey to Cloud: Envisioning Your Solution',
     issuer: 'IBM SkillsBuild',
     year: '2024',
     icon: 'Cloud',
-    verifyUrl: "https://www.credly.com/earner/earned/badge/80553622-a3ed-48d1-86d3-058c5ff29046",
+    verifyUrl: "https://www.credly.com/badges/80553622-a3ed-48d1-86d3-058c5ff29046/public_url",
+    credlyBadgeId: '80553622-a3ed-48d1-86d3-058c5ff29046',
+  },
+  {
+    name: 'LFS101: Introduction to Linux',
+    issuer: 'The Linux Foundation',
+    year: '2026',
+    icon: 'SiLinux',
+    verifyUrl: "https://www.credly.com/badges/508406d4-79d5-4c38-953a-34c3c64682c4/public_url",
+    credlyBadgeId: '508406d4-79d5-4c38-953a-34c3c64682c4',
   },
 ];
 
