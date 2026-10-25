@@ -11,8 +11,14 @@ import Certifications from './components/Certifications';
 import Learning from './components/Learning';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { useEffect } from 'react';
+import { logEvent } from './utils/logger';
 
 export default function App() {
+  // Log a page visit when the app mounts
+  useEffect(() => {
+    logEvent('visit', { path: window.location.pathname });
+  }, []);
   return (
     <>
       {/* Subtle background grid (fixed, decorative) */}

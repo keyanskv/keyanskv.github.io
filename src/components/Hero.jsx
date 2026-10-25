@@ -1,6 +1,7 @@
 import { ChevronDown, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './BrandIcons';
 import { personal } from '../data/portfolio';
+import { logEvent } from '../utils/logger';
 
 // Terminal widget showing a static "typed" session
 function Terminal() {
@@ -110,6 +111,7 @@ export default function Hero() {
                 href={personal.resumeUrl}
                 download="Keyan_Resume.pdf"
                 aria-label="Download Résumé as PDF"
+                onClick={() => logEvent('resume_download', { path: window.location.pathname })}
               >
                 <Download size={16} />
                 Download Résumé
