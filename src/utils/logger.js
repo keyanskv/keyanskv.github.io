@@ -1,23 +1,39 @@
-import { LOG_ENDPOINT } from '../config/logging';
 
-/**
- * Log an event to the remote logging endpoint.
- * @param {string} eventType - Type of the event (e.g., 'visit', 'resume_download').
- * @param {object} details - Additional details about the event.
- */
-export async function logEvent(eventType, details = {}) {
+import { LOG_ENDPOINT } from "../config/logging.js";
+
+function getOrCreateId(storage, key) {
   try {
-    await fetch(LOG_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventType,
-        details,
-        timestamp: new Date().toISOString(),
-      }),
-    });
-  } catch (err) {
-    // Silently fail – logging should not break the UI.
-    console.error('Logging failed', err);
+    let id = storage.getItem(key);
+    if (!id) {
+      id = crypto.randomUUID();
+      storage.setItem(key, id);
+    }
+    return id;
+  } catch {
+    return crypto.randomUUID();
   }
+}
+
+export function logEvent(event, details = {}) {
+  const payload = {
+    event,
+    visitorId: getOrCreateId(localStorage, "portfolio_visitor_id"),
+    sessionId: getOrCreateId(sessionStorage, "portfolio_session_id"),
+    page: window.location.pathname,
+    referrer: document.referrer,
+    userAgent: navigator.userAgent,
+    details,
+  };
+
+  fetch(LOG_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8",
+    },
+    body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch((error) => {
+    console.error("Portfolio logging request failed:", error);
+  });
 }

@@ -1,21 +1,26 @@
-/* portfolio-logger.js – logs page views and resume downloads */
-const LOG_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwQElR9qmo-9L0xT2ihBdLGyQQ7Eu5QIu2FxRBb-ZCRMMmXiOtO0bzEVpNESauhtjEcSw/exec';
 
-function logEvent(eventType, details = {}) {
+export const LOG_ENDPOINT =
+  'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+export function logEvent(eventName) {
+  const payload = {
+    event: eventName,
+    visitorId: getOrCreate('portfolio_logger_visitor_id', localStorage),
+    sessionId: getOrCreate('portfolio_logger_session_id', sessionStorage),
+    page: window.location.pathname,
+    referrer: document.referrer || '',
+    userAgent: navigator.userAgent || ''
+  };
+
   fetch(LOG_ENDPOINT, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ eventType, details, timestamp: new Date().toISOString() }),
-  }).catch(() => { });
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'text/plain;charset=UTF-8'
+    },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(error => {
+    console.error('Log request failed:', error);
+  });
 }
-
-// Log page view on load
-logEvent('page_view', { path: location.pathname, title: document.title });
-
-// Listen for clicks on elements marked with data-resume-download
-document.addEventListener('click', (e) => {
-  const el = e.target.closest('[data-resume-download]');
-  if (el) {
-    logEvent('resume_download', { path: location.pathname });
-  }
-});

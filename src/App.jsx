@@ -17,7 +17,7 @@ import { logEvent } from './utils/logger';
 export default function App() {
   // Log a page visit when the app mounts
   useEffect(() => {
-    logEvent('visit', { path: window.location.pathname });
+    logEvent("page_view");
   }, []);
   return (
     <>
