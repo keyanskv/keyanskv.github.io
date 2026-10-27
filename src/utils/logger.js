@@ -41,21 +41,47 @@ function getBrowser() {
 }
 
 async function getPublicIP() {
-  try {
-    const response = await fetch(
-      "https://api.ipify.org?format=json"
-    );
+  const services = [
+    "https://api.ipify.org?format=json",
+    "https://ipwho.is/"
+  ];
 
-    if (!response.ok) return "";
+  for (const url of services) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(
+        () => controller.abort(),
+        4000
+      );
 
-    const data = await response.json();
-    return typeof data.ip === "string" ? data.ip : "";
-  } catch (error) {
-    console.warn("Could not retrieve public IP:", error);
-    return "";
+      try {
+        const response = await fetch(url, {
+          signal: controller.signal,
+          cache: "no-store"
+        });
+
+        if (!response.ok) continue;
+
+        const data = await response.json();
+
+        const ip = data.ip;
+
+        if (
+          typeof ip === "string" &&
+          /^[0-9a-fA-F:.]+$/.test(ip)
+        ) {
+          return ip;
+        }
+      } finally {
+        clearTimeout(timeout);
+      }
+    } catch (error) {
+      console.warn("IP service unavailable:", url);
+    }
   }
-}
 
+  return "";
+}
 export async function logEvent(event, details = {}) {
   try {
     const ipAddress = await getPublicIP();
