@@ -1,49 +1,85 @@
 
 export const LOG_ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbwQElR9qmo-9L0xT2ihBdLGyQQ7Eu5QIu2FxRBb-ZCRMMmXiOtO0bzEVpNESauhtjEcSw/exec";
+  'https://script.google.com/macros/s/AKfycbwQElR9qmo-9L0xT2ihBdLGyQQ7Eu5QIu2FxRBb-ZCRMMmXiOtO0bzEVpNESauhtjEcSw/exec';
 
-function getOrCreateId(storage, key) {
-    try {
-        let id = storage.getItem(key);
+function getOperatingSystem() {
+  const ua = navigator.userAgent || '';
 
-        if (!id) {
-            id = crypto.randomUUID();
-            storage.setItem(key, id);
-        }
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+  if (/Android/i.test(ua)) return 'Android';
+  if (/Windows/i.test(ua)) return 'Windows';
+  if (/Macintosh|Mac OS X/i.test(ua)) return 'macOS';
+  if (/CrOS/i.test(ua)) return 'ChromeOS';
+  if (/Linux/i.test(ua)) return 'Linux';
 
-        return id;
-    } catch {
-        // Fallback if browser storage is unavailable.
-        return crypto.randomUUID();
-    }
+  return 'Unknown';
 }
 
-export function logEvent(event, details = {}) {
-    if (!["page_view", "resume_download"].includes(event)) {
-        console.warn("Unknown portfolio event:", event);
-        return;
-    }
+function getBrowser() {
+  const ua = navigator.userAgent || '';
 
+  if (/Edg\//i.test(ua)) return 'Edge';
+  if (/OPR\//i.test(ua)) return 'Opera';
+  if (/Firefox\//i.test(ua)) return 'Firefox';
+  if (/Chrome\//i.test(ua)) return 'Chrome';
+  if (/Safari\//i.test(ua)) return 'Safari';
+
+  return 'Unknown';
+}
+
+async function getPublicIP() {
+  try {
+    const response = await Promise.race([
+      fetch('https://api.ipify.org?format=json'),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('IP lookup timeout')), 2000)
+      )
+    ]);
+
+    if (!response.ok) return '';
+
+    const data = await response.json();
+    return typeof data.ip === 'string' ? data.ip : '';
+  } catch (error) {
+    console.warn('IP lookup unavailable:', error);
+    return '';
+  }
+}
+
+export async function logEvent(eventName) {
+  try {
     const payload = {
-        event,
-        visitorId: getOrCreateId(localStorage, "portfolio_visitor_id"),
-        sessionId: getOrCreateId(sessionStorage, "portfolio_session_id"),
-        page: window.location.pathname,
-        referrer: document.referrer,
-        userAgent: navigator.userAgent,
-        // Optional details are not required by the current Apps Script.
-        details,
+      event: eventName,
+      visitorId: getOrCreate(
+        'portfolio_logger_visitor_id',
+        localStorage
+      ),
+      sessionId: getOrCreate(
+        'portfolio_logger_session_id',
+        sessionStorage
+      ),
+      page: window.location.pathname,
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent || '',
+      operatingSystem: getOperatingSystem(),
+      browser: getBrowser(),
+      ipAddress: await getPublicIP()
     };
 
-    fetch(LOG_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "text/plain;charset=UTF-8",
-        },
-        body: JSON.stringify(payload),
-        keepalive: true,
-    }).catch((error) => {
-        console.error("Portfolio logging network failure:", error);
+    console.log('Sending analytics event:', payload);
+
+    await fetch(LOG_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=UTF-8'
+      },
+      body: JSON.stringify(payload),
+      keepalive: true
     });
+
+    console.log('Analytics request sent.');
+  } catch (error) {
+    console.error('Analytics logging failed:', error);
+  }
 }
